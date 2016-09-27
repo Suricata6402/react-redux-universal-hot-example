@@ -11,6 +11,7 @@ import {
     LoginSuccess,
     Survey,
     NotFound,
+    SocketExamplePage
   } from 'containers';
 
 export default (store) => {
@@ -50,6 +51,7 @@ export default (store) => {
       <Route path="login" component={Login}/>
       <Route path="survey" component={Survey}/>
       <Route path="widgets" component={Widgets}/>
+      <Route path="socketexamplepage" component={SocketExamplePage}/>
 
       { /* Catch all route */ }
       <Route path="*" component={NotFound} status={404} />
