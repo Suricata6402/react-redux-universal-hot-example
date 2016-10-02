@@ -1,18 +1,33 @@
-import React, {Component} from 'react';
+import React, {Component, PropTypes} from 'react';
+import {connect} from 'react-redux';
+import * as socketExampleActions from 'redux/modules/socketexamplemodule';
 
+
+@connect(
+  state => ({
+    loaded: state.socketexample.loaded,
+    message: state.socketexample.message,
+    connected: state.socketexample.connected}),
+  socketExampleActions)
 export default class SocketMessageLog extends Component {
+  static propTypes = {
+    loaded: PropTypes.bool,
+    message: PropTypes.string,
+    connected: PropTypes.bool
+  }
   render() {
+    const {loaded, message, connected} = this.props;
     return (
       <div>
         <h3>Message log</h3>
         <ul>
             <li key="1" className="unstyled">
               <span className="glyphicon glyphicon-arrow-right"> </span>
-              Socket string
+              {message}
             </li>
             <li key="2" className="unstyled">
               <span className="glyphicon glyphicon-arrow-left"> </span>
-              [ECHO] Socket string
+              [ECHO] {message}
             </li>
         </ul>
         <form className="form-inline">
@@ -21,9 +36,11 @@ export default class SocketMessageLog extends Component {
             <input
             className="form-control input-sm"
             type="text"
-            ref="message_text"></input>
+            ref="message_text" readOnly = {(loaded === true) ? false : true}></input>
           </div>
-          <button className="btn btn-primary btn-sm">
+          <button
+            className="btn btn-primary btn-sm"
+            disabled = {(connected === true) ? false : true}>
             <i className="fa fa-sign-in"/> Send
           </button>
         </form>
