@@ -9,22 +9,27 @@ import * as socketExampleActions from 'redux/modules/socketexamplemodule';
   state => ({
     loaded: state.socketexample.loaded,
     message: state.socketexample.message,
-    connected: state.socketexample.connected}),
+    connected: state.socketexample.connected,
+    history: state.socketexample.history
+  }),
   socketExampleActions)
 export default class SocketExamplePage extends Component {
   static propTypes = {
     loaded: PropTypes.bool,
     message: PropTypes.string,
-    connected: PropTypes.bool
+    connected: PropTypes.bool,
+    history: PropTypes.array,
+    socketsConnecting: PropTypes.func,
+    socketsDisconnecting: PropTypes.func
   }
   render() {
-    const {loaded, message, connected} = this.props;
+    const {loaded, message, connected, socketsConnecting, socketsDisconnecting, history} = this.props;
     return (
       <div className="container">
         <h1>Socket Example Page</h1>
         <Helmet title="Socket Exapmle Page"/>
         <p>Sockets not connected</p>
-        <SocketConnectionLog loaded={loaded} message={message} connected={connected} />
+        <SocketConnectionLog loaded={loaded} message={message} connected={connected} connectAction={socketsConnecting} disconnectAction={socketsDisconnecting} history={history}/>
         <SocketMessageLog />
       </div>
     );
