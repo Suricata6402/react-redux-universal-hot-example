@@ -47,9 +47,10 @@ export default class SocketMessageLog extends Component {
           <p></p>
           <div className="form-group">
             <input
-            className="form-control input-sm"
-            type="text"
-            ref="message_text" readOnly = {(loaded && connected === true) ? false : true}></input>
+              className="form-control input-sm"
+              type="text"
+              ref="message_text" readOnly = {(loaded && connected === true) ? false : true}>
+            </input>
           </div>
           <button
             className="btn btn-primary btn-sm"
