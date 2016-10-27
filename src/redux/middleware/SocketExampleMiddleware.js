@@ -14,6 +14,13 @@ export default function createSocketExampleMiddleware() {
     console.log('evt ' + evt.data);
     store.dispatch(SocketExampleActions.socketsDisconnect());
   };
+
+  const onMessage = (ws, store) => evt => {
+    // Parse the JSON message received on the websocket
+    const msg = evt.data;
+    store.dispatch(SocketExampleActions.socketsMessageReceiving(msg));
+  };
+
   return store => next => action => {
     switch (action.type) {
       case 'SOCKETS_CONNECT':
@@ -25,6 +32,7 @@ export default function createSocketExampleMiddleware() {
         console.log('SOCKETS_CONNECTING');
         socketExample = new WebSocket('wss://echo.websocket.org/');
         store.dispatch(SocketExampleActions.socketsConnecting());
+        socketExample.onmessage = onMessage(socketExample, store);
         socketExample.onclose = onClose(store);
         socketExample.onopen = onOpen(action.token);
         break;
@@ -35,6 +43,12 @@ export default function createSocketExampleMiddleware() {
           socketExample.close();
         }
         socketExample = null;
+        break;
+      case 'SOCKETS_MESSAGE_SEND':
+        console.log('action');
+        console.log(action);
+        socketExample.send(action.message_send);
+        store.dispatch(SocketExampleActions.socketsMessageSending(action.message_send));
         break;
       default:
         return next(action);

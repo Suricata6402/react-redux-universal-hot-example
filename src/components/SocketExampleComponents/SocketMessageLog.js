@@ -17,14 +17,12 @@ export default class SocketMessageLog extends Component {
     message: PropTypes.string,
     connected: PropTypes.bool,
     message_history: PropTypes.array,
-    socketsMessageSending: PropTypes.func,
-    socketsMessageReceiving: PropTypes.func
+    socketsMessageSend: PropTypes.func,
   }
 
   handleSendButton = (event) => {
     event.preventDefault();
-    this.props.socketsMessageSending(this.refs.message_text.value);
-    this.props.socketsMessageReceiving(this.refs.message_text.value);
+    this.props.socketsMessageSend(this.refs.message_text.value);
     this.refs.message_text.value = '';
   }
 
