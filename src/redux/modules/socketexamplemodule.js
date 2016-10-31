@@ -1,7 +1,9 @@
 export const SOCKETS_CONNECTING = 'SOCKETS_CONNECTING';
 export const SOCKETS_CONNECT = 'SOCKETS_CONNECT';
+export const SOCKETS_CONNECTED = 'SOCKETS_CONNECTED';
 export const SOCKETS_DISCONNECTING = 'SOCKETS_DISCONNECTING';
 export const SOCKETS_DISCONNECT = 'SOCKETS_DISCONNECT';
+export const SOCKETS_DISCONNECTED = 'SOCKETS_DISCONNECTED';
 export const SOCKETS_MESSAGE_SENDING = 'SOCKETS_MESSAGE_SENDING';
 export const SOCKETS_MESSAGE_SEND = 'SOCKETS_MESSAGE_SEND';
 export const SOCKETS_MESSAGE_RECEIVING = 'SOCKETS_MESSAGE_RECEIVING';
@@ -21,13 +23,27 @@ export default function reducer(state = initialState, action = {}) {
       return Object.assign({}, state, {
         loaded: true,
         message: 'Connecting...',
-        connected: true,
+        connected: false,
         history: [
           ...state.history,
           {
             loaded: true,
             message: 'Connecting...',
-            connected: true
+            connected: false
+          }
+        ]
+      });
+    case SOCKETS_CONNECTED:
+      return Object.assign({}, state, {
+        loaded: true,
+        message: 'Connected. All system online.',
+        connected: true,
+        history: [
+          ...state.history,
+          {
+            loaded: true,
+            message: 'Connected. All system online.',
+            connected: false
           }
         ]
       });
@@ -35,12 +51,26 @@ export default function reducer(state = initialState, action = {}) {
       return Object.assign({}, state, {
         loaded: true,
         message: 'Disconnecting...',
-        connected: false,
+        connected: true,
         history: [
           ...state.history,
           {
             loaded: true,
             message: 'Disconnecting...',
+            connected: true
+          }
+        ]
+      });
+    case SOCKETS_DISCONNECTED:
+      return Object.assign({}, state, {
+        loaded: true,
+        message: 'Disconnected',
+        connected: false,
+        history: [
+          ...state.history,
+          {
+            loaded: true,
+            message: 'Disconnected',
             connected: false
           }
         ]
@@ -82,12 +112,19 @@ export function socketsConnecting() {
 export function socketsConnect() {
   return {type: SOCKETS_CONNECT};
 }
+export function socketsConnected() {
+  return {type: SOCKETS_CONNECTED};
+}
 export function socketsDisconnecting() {
   return {type: SOCKETS_DISCONNECTING};
 }
 export function socketsDisconnect() {
   return {type: SOCKETS_DISCONNECT};
 }
+export function socketsDisconnected() {
+  return {type: SOCKETS_DISCONNECTED};
+}
+
 export function socketsMessageSending(sendMessage) {
   return {type: SOCKETS_MESSAGE_SENDING, message_send: sendMessage};
 }
