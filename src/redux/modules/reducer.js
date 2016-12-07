@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import multireducer from 'multireducer';
 import { routerReducer } from 'react-router-redux';
 import {reducer as reduxAsyncConnect} from 'redux-async-connect';
+import { pagination } from 'violet-paginator';
 
 import auth from './auth';
 import counter from './counter';
@@ -21,7 +22,12 @@ export default combineReducers({
     counter3: counter
   }),
   info,
+<<<<<<< HEAD
   widgets,
 // our hero
   socketexample
+=======
+  pagination,
+  widgets
+>>>>>>> refs/remotes/erikras/master
 });
