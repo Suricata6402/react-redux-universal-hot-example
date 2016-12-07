@@ -3,6 +3,7 @@ import multireducer from 'multireducer';
 import { routerReducer } from 'react-router-redux';
 import {reducer as reduxAsyncConnect} from 'redux-async-connect';
 import { pagination } from 'violet-paginator';
+import socketexample from './socketexamplemodule';
 
 import auth from './auth';
 import counter from './counter';
@@ -22,5 +23,7 @@ export default combineReducers({
   }),
   info,
   pagination,
-  widgets
+  widgets,
+// our hero
+  socketexample
 });
