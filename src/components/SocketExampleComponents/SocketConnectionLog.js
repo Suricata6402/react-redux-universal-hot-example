@@ -4,10 +4,21 @@ export default class SocketConnectionLog extends Component {
   static propTypes = {
     loaded: PropTypes.bool,
     message: PropTypes.string,
-    connected: PropTypes.bool
+    connected: PropTypes.bool,
+    history: PropTypes.array,
+    connectAction: PropTypes.func,
+    disconnectAction: PropTypes.func
+  }
+  handleConnectButton = (event) => {
+    event.preventDefault();
+    this.props.connectAction();
+  }
+  handleDisconnectButton = (event) => {
+    event.preventDefault();
+    this.props.disconnectAction();
   }
   render() {
-    const {loaded, message, connected} = this.props;
+    const {history} = this.props;
     return (
       <div>
         <h3>Socket connection log</h3>
@@ -16,17 +27,23 @@ export default class SocketConnectionLog extends Component {
           rows="1"
           readOnly
           placeholder="Waiting ..."
-          value={'index =' + 0 + ', loaded = ' + loaded + ', message = ' + message + ', connected = ' + connected}/>
-          {/* value="
-            index = 2, loaded = true, message = Connected, connected = true
-            index = 1, loaded = false, message = Connecting..., connected = false"/>
-          */}
-        <button className="btn btn-primary btn-sm">
+          value={
+            history.map((historyElement, index) =>
+              'index = ' + index +
+              ' loaded = ' + historyElement.loaded.toString() +
+              ' message = ' + historyElement.message.toString() +
+              ' connected = ' + historyElement.connected.toString() + ' \n').reverse().join('')
+            }/>
+        <button
+          className="btn btn-primary btn-sm"
+          onClick={this.handleConnectButton}>
           <i className="fa fa-sign-in"/> Connect
         </button>
-        <button className="btn btn-danger btn-sm">
+        <button
+          className="btn btn-danger btn-sm"
+          onClick={this.handleDisconnectButton}>
           <i className="fa fa-sign-out"/> Disconnect
-        </button>
+          </button>
       </div>
     );
   }

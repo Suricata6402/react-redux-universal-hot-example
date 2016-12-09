@@ -7,6 +7,7 @@ const initialState = {
   loaded: false,
   message: 'Just created',
   connected: false,
+  history: []
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -15,13 +16,29 @@ export default function reducer(state = initialState, action = {}) {
       return Object.assign({}, state, {
         loaded: true,
         message: 'Connecting...',
-        connected: false
+        connected: true,
+        history: [
+          ...state.history,
+          {
+            loaded: true,
+            message: 'Connecting...',
+            connected: true
+          }
+        ]
       });
     case SOCKETS_DISCONNECTING:
       return Object.assign({}, state, {
         loaded: true,
         message: 'Disconnecting...',
-        connected: true
+        connected: false,
+        history: [
+          ...state.history,
+          {
+            loaded: true,
+            message: 'Disconnecting...',
+            connected: false
+          }
+        ]
       });
     case SOCKETS_MESSAGE_SENDING:
       return Object.assign({}, state, {
