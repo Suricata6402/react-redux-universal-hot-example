@@ -7,7 +7,8 @@ const initialState = {
   loaded: false,
   message: 'Just created',
   connected: false,
-  history: []
+  history: [],
+  message_history: []
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -44,13 +45,27 @@ export default function reducer(state = initialState, action = {}) {
       return Object.assign({}, state, {
         loaded: true,
         message: 'Send message',
-        connected: true
+        connected: true,
+        message_history: [
+          ...state.message_history,
+          {
+            direction: '->',
+            message: action.message_send
+          }
+        ]
       });
     case SOCKETS_MESSAGE_RECEIVING:
       return Object.assign({}, state, {
         loaded: true,
         message: 'Message receive',
-        connected: true
+        connected: true,
+        message_history: [
+          ...state.message_history,
+          {
+            direction: '<-',
+            message: action.message_receive
+          }
+        ]
       });
     default:
       return state;
@@ -63,9 +78,9 @@ export function socketsConnecting() {
 export function socketsDisconnecting() {
   return {type: SOCKETS_DISCONNECTING};
 }
-export function socketsMessageSending() {
-  return {type: SOCKETS_MESSAGE_SENDING};
+export function socketsMessageSending(sendMessage) {
+  return {type: SOCKETS_MESSAGE_SENDING, message_send: sendMessage};
 }
-export function socketsMessageReceiving() {
-  return {type: SOCKETS_MESSAGE_RECEIVING};
+export function socketsMessageReceiving(sendMessage) {
+  return {type: SOCKETS_MESSAGE_RECEIVING, message_receive: sendMessage};
 }
