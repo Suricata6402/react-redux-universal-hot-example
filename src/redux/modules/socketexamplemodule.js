@@ -3,7 +3,9 @@ export const SOCKETS_CONNECT = 'SOCKETS_CONNECT';
 export const SOCKETS_DISCONNECTING = 'SOCKETS_DISCONNECTING';
 export const SOCKETS_DISCONNECT = 'SOCKETS_DISCONNECT';
 export const SOCKETS_MESSAGE_SENDING = 'SOCKETS_MESSAGE_SENDING';
+export const SOCKETS_MESSAGE_SEND = 'SOCKETS_MESSAGE_SEND';
 export const SOCKETS_MESSAGE_RECEIVING = 'SOCKETS_MESSAGE_RECEIVING';
+export const SOCKETS_MESSAGE_RECEIVE = 'SOCKETS_MESSAGE_RECEIVE';
 
 const initialState = {
   loaded: false,
@@ -89,6 +91,9 @@ export function socketsDisconnect() {
 export function socketsMessageSending(sendMessage) {
   return {type: SOCKETS_MESSAGE_SENDING, message_send: sendMessage};
 }
-export function socketsMessageReceiving(sendMessage) {
-  return {type: SOCKETS_MESSAGE_RECEIVING, message_receive: sendMessage};
+export function socketsMessageSend(sendMessage) {
+  return {type: SOCKETS_MESSAGE_SEND, message_send: sendMessage};
+}
+export function socketsMessageReceiving(receiveMessage) {
+  return {type: SOCKETS_MESSAGE_RECEIVING, message_receive: receiveMessage};
 }
