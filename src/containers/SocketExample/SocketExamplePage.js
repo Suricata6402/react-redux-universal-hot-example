@@ -21,15 +21,26 @@ export default class SocketExamplePage extends Component {
     connected: PropTypes.bool,
     history: PropTypes.array,
     socketsConnecting: PropTypes.func,
-    socketsDisconnecting: PropTypes.func
+    socketsDisconnecting: PropTypes.func,
+    socketsConnect: PropTypes.func,
+    socketsDisconnect: PropTypes.func
   }
   render() {
-    const {loaded, message, connected, socketsConnecting, socketsDisconnecting, history} = this.props;
+    const {loaded, message, connected, socketsConnecting, socketsDisconnecting, history, socketsConnect, socketsDisconnect} = this.props;
     return (
       <div className="container">
         <h1>Socket Exapmle Page</h1>
         <Helmet title="Socket Exapmle Page"/>
-        <SocketConnectionLog loaded={loaded} message={message} connected={connected} connectAction={socketsConnecting} disconnectAction={socketsDisconnecting} history={history}/>
+        <SocketConnectionLog
+          loaded={loaded}
+          message={message}
+          connected={connected}
+          connectAction={socketsConnecting}
+          disconnectAction={socketsDisconnecting}
+          history={history}
+          connectAction={socketsConnect}
+          disconnectAction={socketsDisconnect}
+          />
         <SocketMessageLog/>
       </div>
     );
